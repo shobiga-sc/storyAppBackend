@@ -2,7 +2,10 @@ package com.trustrace.storyApp.model;
 
 
 import lombok.Data;
+
+import java.time.LocalDate;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import jakarta.validation.constraints.Email;
@@ -13,13 +16,14 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+@Data
 @Document(collection = "users")
 public class User {
     @Id
     private String id;
 
     @NotBlank
-    @Size(max = 20)
+    @Size(min = 3, max = 20)
     private String username;
 
     @NotBlank
@@ -28,11 +32,15 @@ public class User {
     private String email;
 
     @NotBlank
-    @Size(max = 120)
+    @Size(min = 6, max = 120)
     private String password;
 
     @DBRef
     private Set<Role> roles = new HashSet<>();
+
+    private boolean isPrimeSubscriber = false;
+    private LocalDate primeSubscriptionExpiry;
+    private List<String> followedAuthors;
 
     public User() {
     }
