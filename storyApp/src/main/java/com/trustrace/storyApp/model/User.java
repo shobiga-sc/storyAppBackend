@@ -90,4 +90,28 @@ public class User {
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
     }
+
+    public boolean isPrimeSubscriber() {
+        return isPrimeSubscriber;
+    }
+
+    public void setPrimeSubscriber(boolean primeSubscriber) {
+        isPrimeSubscriber = primeSubscriber;
+    }
+
+    public LocalDate getPrimeSubscriptionExpiry() {
+        return primeSubscriptionExpiry;
+    }
+
+    public void setPrimeSubscriptionExpiry(LocalDate primeSubscriptionExpiry) {
+        this.primeSubscriptionExpiry = primeSubscriptionExpiry;
+    }
+
+    public List<String> getFollowedAuthors() {
+        return followedAuthors;
+    }
+
+    public void setFollowedAuthors(List<String> followedAuthors) {
+        this.followedAuthors = followedAuthors;
+    }
 }

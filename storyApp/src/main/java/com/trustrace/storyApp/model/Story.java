@@ -44,7 +44,7 @@ public class Story {
     private  String authorName;
 
     @NotBlank
-    private List<String> genre;
+    private String genre;
 
     @NotBlank
     private List<String> tags;
@@ -65,4 +65,36 @@ public class Story {
     private int likeCount = 0;
     private int viewCount = 0;
     private int subscriptions = 0;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public LocalDateTime getPublishedDate() {
+        return publishedDate;
+    }
+
+    public void setPublishedDate(LocalDateTime publishedDate) {
+        this.publishedDate = publishedDate;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
+    }
 }

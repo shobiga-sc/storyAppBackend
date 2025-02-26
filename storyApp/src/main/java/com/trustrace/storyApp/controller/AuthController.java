@@ -1,5 +1,6 @@
 package com.trustrace.storyApp.controller;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -92,6 +93,11 @@ public class AuthController {
                 signUpRequest.getEmail(),
                 encoder.encode(signUpRequest.getPassword()));
 
+
+        user.setPrimeSubscriber(false);
+        user.setPrimeSubscriptionExpiry(null);
+        user.setFollowedAuthors(new ArrayList<>());
+
         Set<String> strRoles = signUpRequest.getRoles();
         Set<Role> roles = new HashSet<>();
 
@@ -106,7 +112,6 @@ public class AuthController {
                         Role adminRole = roleRepository.findByName(ERole.ROLE_ADMIN)
                                 .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
                         roles.add(adminRole);
-
                         break;
                     default:
                         Role userRole = roleRepository.findByName(ERole.ROLE_USER)
@@ -117,8 +122,10 @@ public class AuthController {
         }
 
         user.setRoles(roles);
+
         userRepository.save(user);
 
         return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
     }
+
 }
