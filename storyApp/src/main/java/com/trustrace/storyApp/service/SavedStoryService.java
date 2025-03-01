@@ -5,6 +5,7 @@ import com.trustrace.storyApp.repository.SavedStoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -25,4 +26,10 @@ public class SavedStoryService {
     public boolean isStorySaved(String userId, String storyId) {
         return savedStoryRepository.findByUserIdAndStoryId(userId, storyId).isPresent();
     }
+
+    public Optional<List<SavedStory>> getStorySavedForUSer(String userId) {
+        return savedStoryRepository.findByUserId(userId);
+    }
+
+
 }

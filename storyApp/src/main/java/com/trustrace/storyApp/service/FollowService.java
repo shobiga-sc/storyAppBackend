@@ -42,4 +42,13 @@ public class FollowService {
     public boolean isFollowing(String userId, String authorId) {
         return followRepository.existsByFollowerIdAndAuthorId(userId, authorId);
     }
+
+    public int getFollowingCount(String userId) {
+        return followRepository.countByFollowerId(userId);
+    }
+
+    public int getFollowersCount(String userId) {
+        return followRepository.countByAuthorId(userId);
+    }
+
 }

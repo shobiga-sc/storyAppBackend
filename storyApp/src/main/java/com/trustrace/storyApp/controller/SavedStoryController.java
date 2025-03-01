@@ -8,6 +8,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+import java.util.Optional;
+
 @RestController
 @RequestMapping("/api/savedStory")
 @PreAuthorize("hasRole('USER') or  hasRole('ADMIN')")
@@ -15,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 public class SavedStoryController {
   @Autowired
     private SavedStoryService savedStoryService;
+
 
     @PostMapping("/save")
     public ResponseEntity<?> saveStory(@RequestBody SavedStory saveStory) {
@@ -31,5 +35,12 @@ public class SavedStoryController {
     public ResponseEntity<Boolean> isStorySaved(@PathVariable String userId, @PathVariable String storyId) {
         return ResponseEntity.ok(savedStoryService.isStorySaved(userId, storyId));
     }
+
+
+    @GetMapping("/{userId}")
+    public ResponseEntity<Optional<List<SavedStory>>> storySaved(@PathVariable String userId) {
+        return ResponseEntity.ok(savedStoryService.getStorySavedForUSer(userId));
+    }
+
 
 }

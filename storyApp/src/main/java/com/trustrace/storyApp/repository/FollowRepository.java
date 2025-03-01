@@ -10,5 +10,6 @@ public interface FollowRepository extends MongoRepository<Follow, String> {
     List<Follow> findByAuthorId(String authorId);
     boolean existsByFollowerIdAndAuthorId(String followerId, String authorId);
     void deleteByFollowerIdAndAuthorId(String followerId, String authorId);
-
+    int countByFollowerId(String followerId);
+    int countByAuthorId(String authorId);
 }

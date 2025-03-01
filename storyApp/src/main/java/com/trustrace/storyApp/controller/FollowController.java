@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/follow")
@@ -38,5 +39,17 @@ public class FollowController {
         boolean isFollowing = followService.isFollowing(userId, authorId);
         return ResponseEntity.ok(isFollowing);
     }
+
+    @GetMapping("/{userId}/count")
+    public ResponseEntity<Object> getFollowCount(@PathVariable String userId) {
+        int followingCount = followService.getFollowingCount(userId);
+        int followersCount = followService.getFollowersCount(userId);
+
+        return ResponseEntity.ok().body(Map.of(
+                "followingCount", followingCount,
+                "followersCount", followersCount
+        ));
+    }
+
 }
 

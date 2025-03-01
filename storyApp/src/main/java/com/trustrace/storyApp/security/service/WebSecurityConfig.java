@@ -71,6 +71,7 @@ public class WebSecurityConfig {
                         .requestMatchers("/api/reads/**").hasAnyRole("USER", "ADMIN")
                         .requestMatchers("/api/follow/**").hasAnyRole("USER", "ADMIN")
                         .requestMatchers("/api/reads/author/**").hasAnyRole("USER", "ADMIN")
+                        .requestMatchers("/api/savedStory/**").hasAnyRole("USER", "ADMIN")
 //                        .requestMatchers("/api/user/**").permitAll()
                         .anyRequest().authenticated());
 
