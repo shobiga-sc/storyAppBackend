@@ -85,4 +85,33 @@ public class StoryService {
     public List<Story> getAllPublishedStories(){
         return storyRepository.findAllByStatus(StoryStatus.PUBLISHED);
     }
+
+
+    public Optional<Story> updateStory(String storyId, Story updatedStory) {
+        Optional<Story> optionalStory = storyRepository.findById(storyId);
+        if (optionalStory.isEmpty()) {
+            return Optional.empty();
+        }
+
+        Story existingStory = optionalStory.get();
+
+        if (updatedStory.getContent() != null && !updatedStory.getContent().isEmpty()) {
+            existingStory.setContent(updatedStory.getContent());
+        }
+
+
+        if (updatedStory.getStatus() != null) {
+            existingStory.setStatus(updatedStory.getStatus());
+        }
+
+        return Optional.of(storyRepository.save(existingStory));
+    }
+
+    public boolean deleteStory(String storyId) {
+        if (storyRepository.existsById(storyId)) {
+            storyRepository.deleteById(storyId);
+            return true;
+        }
+        return false;
+    }
 }

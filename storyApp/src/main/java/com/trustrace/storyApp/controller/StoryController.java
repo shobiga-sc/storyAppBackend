@@ -47,6 +47,20 @@ public class StoryController {
        return storyService.getAllPublishedStories();
     }
 
+    @PatchMapping("/{storyId}")
+    public ResponseEntity<?> updateStory(@PathVariable String storyId, @RequestBody Story updatedStory) {
+        Optional<Story> updated = storyService.updateStory(storyId, updatedStory);
+        return updated
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    @DeleteMapping("/{storyId}")
+    public ResponseEntity<?> deleteStory(@PathVariable String storyId) {
+        boolean deleted = storyService.deleteStory(storyId);
+        return deleted ? ResponseEntity.ok().build() : ResponseEntity.notFound().build();
+    }
+
 
 
 
