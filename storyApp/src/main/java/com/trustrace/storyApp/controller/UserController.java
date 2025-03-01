@@ -20,12 +20,6 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @GetMapping("/me")
-    public ResponseEntity<Map<String, String>> getUser() {
-        Map<String, String> response = new HashMap<>();
-        response.put("userId", "12345");
-        return ResponseEntity.ok(response);
-    }
 
     @GetMapping("/{userId}")
     public ResponseEntity<?> getUserById(@PathVariable String userId) {
@@ -33,6 +27,8 @@ public class UserController {
                 .map(user -> ResponseEntity.ok(user))
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
+
+
 
 
 }

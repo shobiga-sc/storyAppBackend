@@ -6,21 +6,39 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 
-@Document(collection = "likes")
+@Document(collection = "reads")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Like {
+public class Reads {
     @Id
     private String id;
 
     private String userId;
+    private String authorId;
     private String storyId;
+    private boolean isPaid;
+    private int month;
+    private int year;
+    private Date readTime;
 
+    public String getUserId() {
+        return userId;
+    }
 
-    private LocalDateTime likedAt = LocalDateTime.now();
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public String getAuthorId() {
+        return authorId;
+    }
+
+    public void setAuthorId(String authorId) {
+        this.authorId = authorId;
+    }
 
     public String getStoryId() {
         return storyId;

@@ -66,6 +66,31 @@ public class Story {
     private int viewCount = 0;
     private int subscriptions = 0;
 
+
+    public @NotBlank @Size(min = 3, max = 100) String getTitle() {
+        return title;
+    }
+
+    public void setTitle(@NotBlank @Size(min = 3, max = 100) String title) {
+        this.title = title;
+    }
+
+    public int getViewCount() {
+        return viewCount;
+    }
+
+    public void setViewCount(int viewCount) {
+        this.viewCount = viewCount;
+    }
+
+    public int getLikeCount() {
+        return likeCount;
+    }
+
+    public void setLikeCount(int likeCount) {
+        this.likeCount = likeCount;
+    }
+
     public String getId() {
         return id;
     }

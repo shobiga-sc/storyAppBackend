@@ -6,27 +6,21 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
-@Document(collection = "likes")
+@Document(collection = "storyreadcount")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Like {
+public class StoryReadCount {
     @Id
     private String id;
 
-    private String userId;
     private String storyId;
+    private Set<String> userIds = new HashSet<>();
 
-
-    private LocalDateTime likedAt = LocalDateTime.now();
-
-    public String getStoryId() {
-        return storyId;
-    }
-
-    public void setStoryId(String storyId) {
-        this.storyId = storyId;
+    public int getReadCount() {
+        return userIds.size();
     }
 }

@@ -1,25 +1,22 @@
 package com.trustrace.storyApp.model;
 
-import lombok.AllArgsConstructor;
+
+
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-
 import java.time.LocalDateTime;
 
-@Document(collection = "saved_stories")
+@Document(collection = "story_read_tracker")
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
-public class SavedStory {
+public class StoryReadTracker {
     @Id
     private String id;
-
     private String userId;
     private String storyId;
-
-    private LocalDateTime savedAt = LocalDateTime.now();
+    private String authorId;
+    private LocalDateTime startedAt;
+    private boolean counted;
 
     public String getId() {
         return id;
@@ -45,11 +42,27 @@ public class SavedStory {
         this.storyId = storyId;
     }
 
-    public LocalDateTime getSavedAt() {
-        return savedAt;
+    public String getAuthorId() {
+        return authorId;
     }
 
-    public void setSavedAt(LocalDateTime savedAt) {
-        this.savedAt = savedAt;
+    public void setAuthorId(String authorId) {
+        this.authorId = authorId;
+    }
+
+    public LocalDateTime getStartedAt() {
+        return startedAt;
+    }
+
+    public void setStartedAt(LocalDateTime startedAt) {
+        this.startedAt = startedAt;
+    }
+
+    public boolean isCounted() {
+        return counted;
+    }
+
+    public void setCounted(boolean counted) {
+        this.counted = counted;
     }
 }
