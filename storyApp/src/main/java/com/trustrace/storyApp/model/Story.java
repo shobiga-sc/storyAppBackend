@@ -122,4 +122,85 @@ public class Story {
     public void setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
     }
+
+    public @NotBlank String getPosterUrl() {
+        return posterUrl;
+    }
+
+    public void setPosterUrl(@NotBlank String posterUrl) {
+        this.posterUrl = posterUrl;
+    }
+
+    public @NotBlank String getAuthorId() {
+        return authorId;
+    }
+
+    public void setAuthorId(@NotBlank String authorId) {
+        this.authorId = authorId;
+    }
+
+    public @NotBlank @Size(min = 20, max = 500) String getSummary() {
+        return summary;
+    }
+
+    public void setSummary(@NotBlank @Size(min = 20, max = 500) String summary) {
+        this.summary = summary;
+    }
+
+    public @NotBlank @Size(min = 100, max = 10000) String getContent() {
+        return content;
+    }
+
+    public void setContent(@NotBlank @Size(min = 100, max = 10000) String content) {
+        this.content = content;
+    }
+
+    public String getAuthorName() {
+        return authorName;
+    }
+
+    public void setAuthorName(String authorName) {
+        this.authorName = authorName;
+    }
+
+    public @NotBlank String getGenre() {
+        return genre;
+    }
+
+    public void setGenre(@NotBlank String genre) {
+        this.genre = genre;
+    }
+
+    public @NotBlank List<String> getTags() {
+        return tags;
+    }
+
+    public void setTags(@NotBlank List<String> tags) {
+        this.tags = tags;
+    }
+
+    @NotBlank
+    public boolean isPaid() {
+        return isPaid;
+    }
+
+    public void setPaid(@NotBlank boolean paid) {
+        isPaid = paid;
+    }
+
+    public StoryStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(StoryStatus status) {
+        this.status = status;
+    }
+
+    public int getSubscriptions() {
+        return subscriptions;
+    }
+
+    public void setSubscriptions(int subscriptions) {
+        this.subscriptions = subscriptions;
+    }
 }

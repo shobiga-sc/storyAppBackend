@@ -3,6 +3,7 @@ package com.trustrace.storyApp.controller;
 import com.trustrace.storyApp.service.ReadsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
@@ -32,13 +33,17 @@ public class ReadsController {
         return ResponseEntity.ok(totalReads);
     }
 
-    @GetMapping("/author/{authorId}/monthly")
+    @GetMapping("/author/{authorId}/monthly/{year}/{month}")
     public ResponseEntity<Map<String, Long>> getAuthorMonthlyReads(
             @PathVariable String authorId,
-            @RequestParam int year,
-            @RequestParam int month) {
+            @PathVariable int year,
+            @PathVariable int month,
+            Authentication authentication) {
+
 
         Map<String, Long> reads = readsService.getMonthlyReadsByAuthor(authorId, year, month);
         return ResponseEntity.ok(reads);
     }
+
+
 }

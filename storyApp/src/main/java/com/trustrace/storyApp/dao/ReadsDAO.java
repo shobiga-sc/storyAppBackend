@@ -51,7 +51,6 @@ public class ReadsDAO {
         mongoTemplate.upsert(query, update, StoryReadCount.class);
     }
 
-    // Get monthly reads for an author, grouped by paid/unpaid
     public Map<String, Long> getMonthlyReadsByAuthor(String authorId, int year, int month) {
         MatchOperation match = Aggregation.match(
                 Criteria.where("authorId").is(authorId).and("year").is(year).and("month").is(month)
@@ -68,10 +67,18 @@ public class ReadsDAO {
         readCounts.put("UNPAID", 0L);
 
         for (Document doc : results) {
-            boolean isPaid = doc.getBoolean("_id");
-            readCounts.put(isPaid ? "PAID" : "UNPAID", doc.getLong("count"));
+            if (doc.containsKey("_id") && doc.containsKey("count")) {
+                boolean isPaid = Boolean.TRUE.equals(doc.get("_id")); // Handle null values safely
+                Number countValue = doc.get("count", Number.class); // Get as Number to support both Integer & Long
+                readCounts.put(isPaid ? "PAID" : "UNPAID", countValue != null ? countValue.longValue() : 0L);
+            }
         }
 
         return readCounts;
     }
+
+
+
+
+
 }
