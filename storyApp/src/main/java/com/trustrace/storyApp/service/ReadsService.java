@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -31,4 +32,17 @@ public class ReadsService {
     public Map<String, Long> getMonthlyReadsByAuthor(String authorId, int year, int month) {
         return readsDAO.getMonthlyReadsByAuthor(authorId, year, month);
     }
+
+    public List<String> getAllAuthors() {
+        return readsDAO.getAllAuthors();
+    }
+
+    public long getPaidReadsByAuthor(String authorId, int month, int year) {
+        return readsDAO.getPaidReadsByAuthor(authorId, month, year);
+    }
+
+    public long getUnpaidReadsByAuthor(String authorId, int month, int year) {
+        return readsDAO.getUnpaidReadsByAuthor(authorId, month, year);
+    }
+
 }

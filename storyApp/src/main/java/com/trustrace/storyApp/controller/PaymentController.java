@@ -45,7 +45,7 @@ public class PaymentController {
         if (optionalUser.isPresent()) {
             User user = optionalUser.get();
             user.setPrimeSubscriber(true);
-            user.setPrimeSubscriptionExpiry(LocalDate.now().plusMonths(1)); // 1-month subscription
+            user.setPrimeSubscriptionExpiry(LocalDate.now().plusMonths(1));
             userService.updateUser(user);
             response.put("message", "Payment verified and user updated!");
             return ResponseEntity.ok(response);

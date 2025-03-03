@@ -19,4 +19,13 @@ public class UserService {
         userRepository.save(user);
     }
 
+    public void updatePrimeStatus(String userId, boolean isPrimeSubscriber) {
+        Optional<User> userOptional = userRepository.findById(userId);
+        if (userOptional.isPresent()) {
+            User user = userOptional.get();
+            user.setPrimeSubscriber(isPrimeSubscriber);
+            userRepository.save(user);
+        }
+    }
+
 }
