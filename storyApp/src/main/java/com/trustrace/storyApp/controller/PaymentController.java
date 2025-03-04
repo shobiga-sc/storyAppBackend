@@ -5,6 +5,8 @@ import com.trustrace.storyApp.model.Payment;
 import com.trustrace.storyApp.model.User;
 import com.trustrace.storyApp.service.PaymentService;
 import com.trustrace.storyApp.service.UserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,13 +29,15 @@ public class PaymentController {
     @Autowired
     private UserService userService;
 
+    private static final Logger logger = LoggerFactory.getLogger(PaymentController.class);
+
     @PostMapping("/verify")
     public ResponseEntity<Map<String, String>> verifyPayment(@RequestBody Map<String, String> paymentData) {
         String userId = paymentData.get("userId");
         String orderId = paymentData.get("orderId");
         String paymentId = paymentData.get("paymentId");
         double amount = 499.00;
-
+      logger.info("Verifying payment of id {} with user id {} for order id {}",paymentId, userId, orderId);
         // Store payment details
         Payment payment = new Payment(null, userId, orderId, paymentId, amount, "INR", null);
         paymentService.savePayment(payment);
