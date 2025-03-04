@@ -1,5 +1,6 @@
 package com.trustrace.storyApp.controller;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -97,6 +98,8 @@ public class AuthController {
         user.setPrimeSubscriber(false);
         user.setPrimeSubscriptionExpiry(null);
         user.setFollowedAuthors(new ArrayList<>());
+        user.setSignUpDate(LocalDateTime.now());
+        user.setFreeRead(new ArrayList<>());
 
         Set<String> strRoles = signUpRequest.getRoles();
         Set<Role> roles = new HashSet<>();

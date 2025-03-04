@@ -1,9 +1,11 @@
 package com.trustrace.storyApp.model;
 
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -12,12 +14,15 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
+import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Data
 @Document(collection = "users")
+
 public class User {
     @Id
     private String id;
@@ -41,6 +46,11 @@ public class User {
     private boolean isPrimeSubscriber = false;
     private LocalDate primeSubscriptionExpiry;
     private List<String> followedAuthors;
+
+    @CreatedDate
+    private LocalDateTime signUpDate;
+
+    private List<String> freeRead;
 
     public User() {
     }
@@ -113,5 +123,21 @@ public class User {
 
     public void setFollowedAuthors(List<String> followedAuthors) {
         this.followedAuthors = followedAuthors;
+    }
+
+    public LocalDateTime getSignUpDate() {
+        return signUpDate;
+    }
+
+    public void setSignUpDate(LocalDateTime signUpDate) {
+        this.signUpDate = signUpDate;
+    }
+
+    public List<String> getFreeRead() {
+        return freeRead;
+    }
+
+    public void setFreeRead(List<String> freeRead) {
+        this.freeRead = freeRead;
     }
 }

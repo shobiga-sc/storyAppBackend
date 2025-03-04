@@ -10,9 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 @RestController
 @RequestMapping("/api/user")
@@ -51,6 +49,15 @@ public class UserController {
         return ResponseEntity.ok("Prime subscription status updated successfully.");
     }
 
+
+
+    @PutMapping("/{userId}/update-freeRead")
+    public ResponseEntity<String> updateFreeRead(@PathVariable String userId, @RequestBody Map<String, List<String>> request) {
+      List<String> freeRead = request.getOrDefault("freeRead", new ArrayList<>());
+        logger.info("Updation in freeRead  for user with ID : {}  ", userId);
+        userService.updateFreeRead(userId, freeRead);
+        return ResponseEntity.ok("freeRead updated successfully.");
+    }
 
 
 
