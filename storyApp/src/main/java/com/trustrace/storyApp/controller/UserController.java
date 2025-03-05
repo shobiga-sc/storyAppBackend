@@ -14,7 +14,7 @@ import java.util.*;
 
 @RestController
 @RequestMapping("/api/user")
-@PreAuthorize("hasRole('USER') or  hasRole('ADMIN')")
+@PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
 @CrossOrigin(origins = "*")
 public class UserController {
 
@@ -28,37 +28,52 @@ public class UserController {
 
     @GetMapping("/{userId}")
     public ResponseEntity<?> getUserById(@PathVariable String userId) {
-        logger.info("Fetching user details with ID : {}  ",userId);
-        return userService.getUserById(userId)
-                .map(user -> ResponseEntity.ok(user))
-                .orElseGet(() -> ResponseEntity.notFound().build());
+        try {
+            logger.info("Fetching user details with ID: {}", userId);
+            return userService.getUserById(userId)
+                    .map(ResponseEntity::ok)
+                    .orElseGet(() -> ResponseEntity.notFound().build());
+        } catch (Exception e) {
+            logger.error("Error fetching user details", e);
+            return ResponseEntity.internalServerError().body("Error fetching user details");
+        }
     }
 
     @DeleteMapping("/deleteUser/{id}")
     public ResponseEntity<?> deleteUser(@PathVariable String id) {
-        userRepository.deleteById(id);
-        logger.info("Deleting user details with ID : {}  ",id);
-        return ResponseEntity.ok("User deleted");
+        try {
+            userRepository.deleteById(id);
+            logger.info("Deleting user details with ID: {}", id);
+            return ResponseEntity.ok("User deleted");
+        } catch (Exception e) {
+            logger.error("Error deleting user", e);
+            return ResponseEntity.internalServerError().body("Error deleting user");
+        }
     }
 
     @PutMapping("/{userId}/update-prime")
     public ResponseEntity<String> updatePrimeStatus(@PathVariable String userId, @RequestBody Map<String, Boolean> request) {
-        boolean isPrimeSubscriber = request.getOrDefault("isPrimeSubscriber", false);
-        logger.info("Updation subscription status to {} for user with ID : {}  ",isPrimeSubscriber, userId);
-        userService.updatePrimeStatus(userId, isPrimeSubscriber);
-        return ResponseEntity.ok("Prime subscription status updated successfully.");
+        try {
+            boolean isPrimeSubscriber = request.getOrDefault("isPrimeSubscriber", false);
+            logger.info("Updating subscription status to {} for user with ID: {}", isPrimeSubscriber, userId);
+            userService.updatePrimeStatus(userId, isPrimeSubscriber);
+            return ResponseEntity.ok("Prime subscription status updated successfully.");
+        } catch (Exception e) {
+            logger.error("Error updating prime subscription status", e);
+            return ResponseEntity.internalServerError().body("Error updating prime subscription status");
+        }
     }
-
-
 
     @PutMapping("/{userId}/update-freeRead")
     public ResponseEntity<String> updateFreeRead(@PathVariable String userId, @RequestBody Map<String, List<String>> request) {
-      List<String> freeRead = request.getOrDefault("freeRead", new ArrayList<>());
-        logger.info("Updation in freeRead  for user with ID : {}  ", userId);
-        userService.updateFreeRead(userId, freeRead);
-        return ResponseEntity.ok("freeRead updated successfully.");
+        try {
+            List<String> freeRead = request.getOrDefault("freeRead", new ArrayList<>());
+            logger.info("Updating freeRead for user with ID: {}", userId);
+            userService.updateFreeRead(userId, freeRead);
+            return ResponseEntity.ok("freeRead updated successfully.");
+        } catch (Exception e) {
+            logger.error("Error updating freeRead", e);
+            return ResponseEntity.internalServerError().body("Error updating freeRead");
+        }
     }
-
-
-
 }

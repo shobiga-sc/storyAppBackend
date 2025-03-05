@@ -1,15 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="d22c04bf-3fc9-4ff5-975b-bd2fc15e1a2e" name="Changes" comment="" />
+    <list default="true" id="d22c04bf-3fc9-4ff5-975b-bd2fc15e1a2e" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/storyApp/logDetails.log" beforeDir="false" afterPath="$PROJECT_DIR$/storyApp/logDetails.log" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 6
-}]]></component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 6
+}</component>
   <component name="ProjectId" id="2tTiwNxXbcER6QltGsPMkoWD02H" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -18,8 +23,9 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/ShobigaChinnasamy/Downloads/storyApp (1)"
+    "last_opened_file_path": "C:/Users/ShobigaChinnasamy/Downloads/storyApp"
   }
 }]]></component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
