@@ -121,4 +121,14 @@ public class StoryService {
             throw new RuntimeException("Error deleting story", e);
         }
     }
+
+    public boolean deleteStoriesByUserId(String userId) {
+        List<Story> stories = storyRepository.findByAuthorId(userId);
+        if (stories.isEmpty()) {
+            return false;
+        }
+        storyRepository.deleteAll(stories);
+        return true;
+    }
+
 }

@@ -96,4 +96,17 @@ public class StoryController {
             return ResponseEntity.internalServerError().body("Error deleting story");
         }
     }
+
+    @DeleteMapping("/deleteByUser/{userId}")
+    public ResponseEntity<?> deleteStoriesByUserId(@PathVariable String userId) {
+        try {
+            logger.info("Deleting all stories for user with id {}", userId);
+            boolean deleted = storyService.deleteStoriesByUserId(userId);
+            return deleted ? ResponseEntity.ok().build() : ResponseEntity.notFound().build();
+        } catch (Exception e) {
+            logger.error("Error deleting stories", e);
+            return ResponseEntity.internalServerError().body("Error deleting stories");
+        }
+    }
+
 }

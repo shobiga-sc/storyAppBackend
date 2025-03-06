@@ -13,4 +13,6 @@ import java.util.Optional;
 public interface StoryRepository extends MongoRepository<Story, String> {
      Optional<Story> findById(String storyId);
      List<Story> findAllByStatus(StoryStatus status);
+     List<Story> findByAuthorId(String userId);
+
 }
