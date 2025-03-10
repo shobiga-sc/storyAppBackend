@@ -34,6 +34,7 @@ public class ReadsService {
             LocalDate today = LocalDate.now();
             Reads read = new Reads(null, userId, authorId, storyId, isPaid, today.getMonthValue(), today.getYear(), new Date());
             readsDAO.saveRead(read);
+
             readsDAO.updateStoryReadCount(storyId, userId);
         } catch (Exception e) {
             logger.error("Error tracking story read for userId: {}, storyId: {}", userId, storyId, e);

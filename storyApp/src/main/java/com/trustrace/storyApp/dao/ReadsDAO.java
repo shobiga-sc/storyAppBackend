@@ -2,6 +2,7 @@ package com.trustrace.storyApp.dao;
 
 import com.trustrace.storyApp.controller.AdminStatsController;
 import com.trustrace.storyApp.model.Reads;
+import com.trustrace.storyApp.model.Story;
 import com.trustrace.storyApp.model.StoryReadCount;
 import org.apache.catalina.Group;
 import org.slf4j.Logger;
@@ -44,6 +45,16 @@ public class ReadsDAO {
     public void saveRead(Reads read) {
         if (!hasUserReadStory(read.getUserId(), read.getStoryId())) {
             mongoTemplate.save(read);
+            Query storyQuery = new Query(Criteria.where("id").is(read.getStoryId()));
+            Story story = mongoTemplate.findOne(storyQuery, Story.class);
+
+            if (story != null) {
+
+                story.setViewCount(story.getViewCount() + 1);
+
+
+                mongoTemplate.save(story);
+            }
         }
     }
 
@@ -52,6 +63,9 @@ public class ReadsDAO {
         Query query = new Query(Criteria.where("storyId").is(storyId));
         Update update = new Update().addToSet("userIds", userId);
         mongoTemplate.upsert(query, update, StoryReadCount.class);
+
+
+
     }
 
     public Map<String, Long> getMonthlyReadsByAuthor(String authorId, int year, int month) {
