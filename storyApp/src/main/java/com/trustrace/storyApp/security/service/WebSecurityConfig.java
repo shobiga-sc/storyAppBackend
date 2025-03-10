@@ -75,7 +75,7 @@ public class WebSecurityConfig {
                         .requestMatchers("/api/reports/**").hasAnyRole("USER", "ADMIN")
                         .requestMatchers("/api/admin/subscription/**").hasAnyRole("USER", "ADMIN")
                         .requestMatchers("/api/admin/stats/**").hasAnyRole("USER", "ADMIN")
-                        .requestMatchers("/api/payouts/**").hasAnyRole("USER", "ADMIN")
+                        .requestMatchers("/api/reads/stats/**").permitAll()
 //                        .requestMatchers("/api/user/**").permitAll()
                         .anyRequest().authenticated());
 

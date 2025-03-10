@@ -1,7 +1,11 @@
 package com.trustrace.storyApp.dao;
 
+import com.trustrace.storyApp.controller.AdminStatsController;
 import com.trustrace.storyApp.model.Reads;
 import com.trustrace.storyApp.model.StoryReadCount;
+import org.apache.catalina.Group;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.aggregation.Aggregation;
@@ -14,10 +18,7 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Repository;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 @Repository
 public class ReadsDAO {
@@ -25,6 +26,7 @@ public class ReadsDAO {
     @Autowired
     private MongoTemplate mongoTemplate;
 
+    private static final Logger logger = LoggerFactory.getLogger(ReadsDAO.class);
 
     public boolean hasUserReadStory(String userId, String storyId) {
         Query query = new Query(Criteria.where("userId").is(userId).and("storyId").is(storyId));
@@ -98,7 +100,6 @@ public class ReadsDAO {
     }
 
 
-
     public long getPaidReadsByAuthor(String authorId, int month, int year) {
         Query query = new Query(Criteria.where("authorId").is(authorId)
                 .and("month").is(month)
@@ -128,10 +129,30 @@ public class ReadsDAO {
     }
 
 
+    public List<Map<String, Object>> getTotalReadsPerAuthor(int month, int year) {
+
+        Aggregation aggregation = Aggregation.newAggregation(
+
+                Aggregation.match(Criteria.where("month").is(month).and("year").is(year)),
+
+                Aggregation.group("authorId")
+                        .count().as("totalReads")
+                        .push("isPaid").as("isPaidGroups")
+        );
 
 
-
+        AggregationResults<Map> result = mongoTemplate.aggregate(aggregation, "reads", Map.class);
+        return (List<Map<String, Object>>) (List<?>) result.getMappedResults();
+    }
 
 
 
 }
+
+
+
+
+
+
+
+

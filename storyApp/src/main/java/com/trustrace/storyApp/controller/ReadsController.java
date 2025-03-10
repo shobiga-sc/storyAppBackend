@@ -1,5 +1,6 @@
 package com.trustrace.storyApp.controller;
 
+import com.trustrace.storyApp.dao.ReadsDAO;
 import com.trustrace.storyApp.service.AdminStatsService;
 import com.trustrace.storyApp.service.ReadsService;
 import org.slf4j.Logger;
@@ -9,6 +10,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -19,6 +22,9 @@ public class ReadsController {
 
     @Autowired
     private ReadsService readsService;
+
+    @Autowired
+    private ReadsDAO readsDao;
 
     @Autowired
     private AdminStatsService adminStatsService;
@@ -82,4 +88,12 @@ public class ReadsController {
             return ResponseEntity.internalServerError().build();
         }
     }
+
+    @GetMapping("/totalReadsPerAuthor")
+    public List<Map<String, Object>> getTotalReadsPerAuthor(@RequestParam int month, @RequestParam int year) {
+        return readsDao.getTotalReadsPerAuthor(month, year);
+    }
+
+
+
 }

@@ -38,11 +38,11 @@ public class PaymentController {
         String paymentId = paymentData.get("paymentId");
         double amount = 499.00;
       logger.info("Verifying payment of id {} with user id {} for order id {}",paymentId, userId, orderId);
-        // Store payment details
+
         Payment payment = new Payment(null, userId, orderId, paymentId, amount, "INR", null);
         paymentService.savePayment(payment);
 
-        // Update user to Prime Subscriber
+
         Optional<User> optionalUser = userService.getUserById(userId);
         Map<String, String> response = new HashMap<>();
 
