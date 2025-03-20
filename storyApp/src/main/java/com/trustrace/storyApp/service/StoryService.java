@@ -47,13 +47,13 @@ public class StoryService {
                     String followerEmail = user.getEmail();
                     storyRepository.findById(savedStory.getId()).ifPresent(storyData -> {
                         String authorName = storyData.getAuthorName();
-                        String subject = "New Story by " + authorName + "! Don't Miss It!";
-                        String body = "Hi there,\n\n" +
-                                "Exciting news! Your favorite author, *" + authorName + "*, has just published a new story: *" + storyData.getTitle() + "*.\n\n" +
+                        String subject = "📖✨ New Story by " + authorName + "👤! Don't Miss It! 🎉";
+                        String body = "Hi there\uD83D\uDC4B,\n\n" +
+                                "Exciting news! Your favorite author, *" + authorName + "👤*, has just published a new story: *" + storyData.getTitle() + "\uD83D\uDCD8🎉*.\n\n" +
                                 "Here's a short preview:\n\n" +
                                 "\"" + storyData.getSummary() + "\"\n\n" +
-                                "Happy reading!\n\n" +
-                                "— The StoryApp Team";
+                                "Happy reading \uD83C\uDF89!\n\n" +
+                                "— The StoryApp Team📖";
                         emailService.sendEmail(followerEmail, subject, body);
                     });
                 });

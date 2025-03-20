@@ -1,5 +1,6 @@
 package com.trustrace.storyApp.controller;
 
+import com.trustrace.storyApp.dto.UserDTO;
 import com.trustrace.storyApp.model.User;
 import com.trustrace.storyApp.repository.UserRepository;
 import com.trustrace.storyApp.service.UserService;
@@ -31,7 +32,7 @@ public class UserController {
         try {
             logger.info("Fetching user details with ID: {}", userId);
             return userService.getUserById(userId)
-                    .map(ResponseEntity::ok)
+                    .map(user -> ResponseEntity.ok(new UserDTO(user)))
                     .orElseGet(() -> ResponseEntity.notFound().build());
         } catch (Exception e) {
             logger.error("Error fetching user details", e);
