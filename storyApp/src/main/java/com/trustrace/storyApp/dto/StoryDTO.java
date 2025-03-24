@@ -2,9 +2,10 @@ package com.trustrace.storyApp.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.trustrace.storyApp.model.Story;
+import lombok.Getter;
 
 import java.util.Arrays;
-
+@Getter
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class StoryDTO {
     private String id;
@@ -14,6 +15,7 @@ public class StoryDTO {
     private Integer likeCount;
     private Integer viewCount;
     private String content;
+    private Boolean paid;
 
     public StoryDTO(Story story, boolean shouldBlur,  boolean hasFullAccess) {
         this.id = story.getId();
@@ -22,6 +24,7 @@ public class StoryDTO {
         this.authorId = story.getAuthorId();
         this.likeCount = story.getLikeCount();
         this.viewCount = story.getViewCount();
+        this.paid = story.isPaid();
         if (hasFullAccess) {
             this.content = story.getContent();
         } else if (shouldBlur) {
@@ -45,4 +48,6 @@ public class StoryDTO {
     public Integer getViewCount() { return viewCount; }
     public String getContent() { return content; }
     public String getGenre() { return genre; }
+    public Boolean getPaid() { return paid; }
+
 }

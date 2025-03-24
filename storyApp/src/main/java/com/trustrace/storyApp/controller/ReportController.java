@@ -41,18 +41,36 @@ public class ReportController {
 
     @PostMapping("/create")
     public ResponseEntity<Report> createReport(@RequestBody Report report) {
+        userRepository.findById(report.getReportedByUserId()).ifPresent(user ->
+                report.setReportedByName(user.getUsername()));
+
+        userRepository.findById(report.getReportedAuthorId()).ifPresent(user ->
+                report.setReportedAuthorName(user.getUsername()));
+
         report.setReportedAt(LocalDateTime.now());
         Report savedReport = reportRepository.save(report);
         return ResponseEntity.ok(savedReport);
     }
 
+
     @PutMapping("/update/{id}")
     public ResponseEntity<?> updateReportStatus(@PathVariable String id, @RequestBody Map<String, Boolean> update) {
         logger.info("Updating report with id {}", id);
+
         return reportRepository.findById(id).map(report -> {
-            report.setReportAccepted(update.get("isReportAccepted"));
+            if (update.containsKey("isReportAccepted")) {
+                report.setReportAccepted(update.get("isReportAccepted"));
+            }
+            if (update.containsKey("isStoryDeleted")) {
+                report.setStoryDeleted(update.get("isStoryDeleted"));
+            }
+            if (update.containsKey("isUserDeleted")) {
+                report.setIsUserDeleted(update.get("isUserDeleted"));
+            }
+
             reportRepository.save(report);
             return ResponseEntity.ok(report);
         }).orElseGet(() -> ResponseEntity.notFound().build());
     }
+
 }

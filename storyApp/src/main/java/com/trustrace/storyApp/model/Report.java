@@ -20,6 +20,8 @@ public class Report {
     private String reportedByUserId;
     private String reportedAuthorId;
     private String reportedStoryId;
+    private String reportedByName;
+    private String reportedAuthorName;
 
     @NotBlank
     private String reason;
@@ -100,5 +102,29 @@ public class Report {
 
     public void setIsUserDeleted(boolean isUserDeleted) {
         this.isUserDeleted = isUserDeleted;
+    }
+
+    public String getReportedByName() {
+        return reportedByName;
+    }
+
+    public void setReportedByName(String reportedByName) {
+        this.reportedByName = reportedByName;
+    }
+
+    public String getReportedAuthorName() {
+        return reportedAuthorName;
+    }
+
+    public void setReportedAuthorName(String reportedAuthorName) {
+        this.reportedAuthorName = reportedAuthorName;
+    }
+
+    public boolean isUserDeleted() {
+        return isUserDeleted;
+    }
+
+    public void setUserDeleted(boolean userDeleted) {
+        isUserDeleted = userDeleted;
     }
 }

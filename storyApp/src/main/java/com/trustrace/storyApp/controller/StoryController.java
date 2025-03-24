@@ -1,5 +1,6 @@
 package com.trustrace.storyApp.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.trustrace.storyApp.dto.StoryDTO;
 import com.trustrace.storyApp.model.Story;
 import com.trustrace.storyApp.model.StoryStatus;
@@ -62,7 +63,10 @@ public class StoryController {
         try {
             logger.info("Fetching story with id {}", storyId);
             return storyService.getStoryById(storyId)
-                    .map(ResponseEntity::ok)
+                    .map(story -> {
+                        story.setContent(null);
+                        return ResponseEntity.ok(story);
+                    })
                     .orElseGet(() -> ResponseEntity.notFound().build());
         } catch (Exception e) {
             logger.error("Error fetching story", e);
@@ -70,7 +74,23 @@ public class StoryController {
         }
     }
 
-    @GetMapping(value = "/user/{storyId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping("/edit/{storyId}")
+    public ResponseEntity<?> getStoryByIdForEdit(@PathVariable String storyId) {
+        try {
+            logger.info("Fetching story with id {}", storyId);
+            return storyService.getStoryById(storyId)
+                    .map(story -> {
+
+                        return ResponseEntity.ok(story);
+                    })
+                    .orElseGet(() -> ResponseEntity.notFound().build());
+        } catch (Exception e) {
+            logger.error("Error fetching story", e);
+            return ResponseEntity.internalServerError().body("Error fetching story");
+        }
+    }
+
+    @GetMapping("/user/{storyId}")
     public ResponseEntity<?> getStoryById(@PathVariable String storyId, @RequestParam String userId) {
         try {
             Story story = storyService.getStoryById(storyId)
@@ -85,6 +105,7 @@ public class StoryController {
             boolean isAuthor = user.getId().equals(story.getAuthorId());
 
             boolean isPaidStory = story.isPaid() && !isAdmin && !isAuthor;
+
             boolean isEligibleForFreeRead = (user.getPrimeSubscriptionExpiry() == null ||
                     user.getSignUpDate().isBefore(user.getPrimeSubscriptionExpiry().atStartOfDay()))
                     && user.getFreeRead().size() < 3
@@ -100,10 +121,11 @@ public class StoryController {
             }
 
             StoryDTO response = new StoryDTO(story, shouldBlur, isAdmin || isAuthor);
-
             Map<String, Object> responseBody = new HashMap<>();
             responseBody.put("story", response);
             responseBody.put("shouldBlur", shouldBlur);
+            logger.info("Returning story response: {}", new ObjectMapper().writeValueAsString(responseBody));
+
 
             return ResponseEntity.ok(responseBody);
         } catch (RuntimeException e) {
